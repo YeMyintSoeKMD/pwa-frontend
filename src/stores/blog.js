@@ -8,7 +8,7 @@ export const useBlogStore = defineStore('blog', () => {
   const blogs = ref([])
   const getBlogs = async () => {
     try {
-      const res = await axios.get("blogs");
+      const res = await axios.get("/blogs");
       if(res.status === 200){
         blogs.value = res.data.data
       }
@@ -23,7 +23,7 @@ export const useBlogStore = defineStore('blog', () => {
   const blog = ref({})
   const getBlog = async (id) => {
     try {
-      const res = await axios.get(`blogs/${id}`);
+      const res = await axios.get(`/blogs/${id}`);
       if(res.status === 200){
         blog.value = res.data.data
       }
@@ -44,7 +44,7 @@ export const useBlogStore = defineStore('blog', () => {
         "title": form.title,
         "body": form.body,
       }
-      const res = await axios.post("blogs", data);
+      const res = await axios.post("/blogs", data);
       if(res.status === 201){
         blogs.value.unshift(res.data.data)
         alert("Blog created successfully")
@@ -67,7 +67,7 @@ export const useBlogStore = defineStore('blog', () => {
     }
 
     try {
-      const res = await axios.delete(`blogs/${id}`);
+      const res = await axios.delete(`/blogs/${id}`);
       if(res.status === 200){
         blogs.value = blogs.value.filter(blog => blog.id !== id)
         alert("Blog deleted successfully")

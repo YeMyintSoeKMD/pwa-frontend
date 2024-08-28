@@ -42,6 +42,8 @@ const props = defineProps({
 onMounted(() => {
     getBlog(props.id)
 })
+
+
 </script>
 
 <style lang="scss" scoped></style>
