@@ -1,4 +1,4 @@
-const CACHE_NAME = 'v1'
+const CACHE_NAME = 'v2'
 
 const PRE_CACHE_ASSETS = [
     "/offline",
@@ -7,16 +7,18 @@ const PRE_CACHE_ASSETS = [
 
 /* Install service worker */
 self.addEventListener('install', e => {
-  self.waitUntil(
-    caches.open(CACHE_NAME)
-    .then(cache => {
-        cache.addAll(PRE_CACHE_ASSETS)
-    })
-  )
+    console.log('SW: installed');
+    self.waitUntil(
+        caches.open(CACHE_NAME)
+        .then(cache => {
+            cache.addAll(PRE_CACHE_ASSETS)
+        })
+    )
 })
 
 /* Activate service worker */ 
 self.addEventListener('activate', e => {
+    console.log('SW: activated');
     /* Delete old caches */
     e.waitUntil(
         caches.keys().then(cacheNames => {
@@ -34,6 +36,7 @@ self.addEventListener('activate', e => {
 
 /* Fetching */
 self.addEventListener('fetch', e => {
+    console.log('SW: fetching');
      // Ignore chrome-extension requests
      if (e.request.url.startsWith('chrome-extension://')) {
         return;

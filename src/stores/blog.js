@@ -38,8 +38,7 @@ export const useBlogStore = defineStore('blog', () => {
     'body': '',
   })
 
-  const storeBlog = async (e, form) => {
-    e.preventDefault()
+  const storeBlog = async (form) => {
     try {
       const data = {
         "title": form.title,
@@ -61,11 +60,18 @@ export const useBlogStore = defineStore('blog', () => {
 
   /* Delete blog */
   const deleteBlog = async (id) => {
+    
+    if (!navigator.onLine) {
+      alert("Cannot delete blog while offline. Please try again when you are online.");
+      return;
+    }
+
     try {
       const res = await axios.delete(`blogs/${id}`);
       if(res.status === 200){
         blogs.value = blogs.value.filter(blog => blog.id !== id)
         alert("Blog deleted successfully")
+
       }
     } catch (error) {
       console.log(error.response.data);
